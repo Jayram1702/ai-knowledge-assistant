@@ -6,9 +6,11 @@ import {
   IconButton,
   Paper,
   Avatar,
+  InputAdornment,
 } from "@mui/material";
 import SendIcon from "@mui/icons-material/Send";
 import { sendMessage } from "@/services/ChatApi";
+import PdfUpload from "@/shared/PdfUpload";
 
 export default function ChatPage() {
   const [messages, setMessages] = useState([
@@ -104,6 +106,7 @@ export default function ChatPage() {
           gap: 1,
         }}
       >
+        {/* <PdfUpload /> */}
         <TextField
           fullWidth
           placeholder="Message AI..."
@@ -111,6 +114,15 @@ export default function ChatPage() {
           onChange={(e) => setInput(e.target.value)}
           onKeyDown={(e) => {
             if (e.key === "Enter") handleSend();
+          }}
+          slotProps={{
+            input: {
+              startAdornment: (
+                <InputAdornment position="start">
+                  <PdfUpload />
+                </InputAdornment>
+              ),
+            },
           }}
         />
 
