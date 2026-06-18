@@ -1,0 +1,38 @@
+services:
+  qdrant:
+    image: qdrant/qdrant
+    container_name: qdrant
+
+    ports:
+      - "6333:6333"
+
+    volumes:
+      - qdrant_data:/qdrant/storage
+
+  backend:
+    build: ./backend
+
+    container_name: backend
+
+    ports:
+      - "5000:5000"
+
+    env_file:
+      - ./backend/.env
+
+    depends_on:
+      - qdrant
+
+  frontend:
+    build: ./frontend
+
+    container_name: frontend
+
+    ports:
+      - "3000:3000"
+
+    depends_on:
+      - backend
+
+volumes:
+  qdrant_data:
